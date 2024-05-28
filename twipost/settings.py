@@ -15,6 +15,9 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 
+from django.contrib.messages import constants as messages
+from django.contrib.messages import constants as message_constants
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'post.apps.PostConfig',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'django_bootstrap5',
+
+    'allauth.socialaccount',
+    
 ]
 
 MIDDLEWARE = [
@@ -53,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'twipost.urls'
@@ -60,7 +72,7 @@ ROOT_URLCONF = 'twipost.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,50 +143,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#ロギング設定
-LOGGING = {
-    'version': 1, #1固定
-    'disable_existing_loggers': False,
+# 認証
+AUTHENTICATION_BACKENDS = (
+   'django.contrib.auth.backends.ModelBackend',
+   'allauth.account.auth_backends.AuthenticationBackend',  
+)
 
-    #ロガーの設定
-    'loggers': {
-        #djangoが利用するロガー
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
-        },
-        #postアプリケーションが利用するロガー
-        'post': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    },
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_USERNAME_REQUIRED = True 
 
-    #ハンドラの設定
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'dev'
-        },
-    },
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = True 
 
-    #フォーマッタの設定
-    'formatters': {
-        'dev': {
-            'format': '\t'.join([
-                '%(asctime)s',
-                '[%(levelname)s]',
-                '%(pathname)s(Line:%(linedo)d)',
-                '%(message)s'
-            ])
-        },
-    }
-}
+SITE_ID = 1 
 
+LOGIN_REDIRECT_URL = 'home'          
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'

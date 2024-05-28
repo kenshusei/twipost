@@ -34,7 +34,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -167,5 +166,5 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 SITE_ID = 1 
 
-LOGIN_REDIRECT_URL = 'home'          
+LOGIN_REDIRECT_URL = 'post:home'          
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'

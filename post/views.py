@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 
 from .models import Post, Connection
 
+from django.template import RequestContext
+
 
 class Home(LoginRequiredMixin, ListView):
     """HOMEページで、自分以外のユーザー投稿をリスト表示"""
@@ -157,7 +159,7 @@ class FollowList(LoginRequiredMixin, ListView):
     template_name = 'list.html'
 
     def get_queryset(self):
-        """フォローリスト内にユーザーが含まれている場合のみクエリセット返す"""
+        """フォローリスト内にユーザーが含まれている場合のみクエリセットを返す"""
         my_connection = Connection.objects.get_or_create(user=self.request.user)
         all_follow = my_connection[0].following.all()
         return Post.objects.filter(user__in=all_follow)

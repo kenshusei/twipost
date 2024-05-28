@@ -7,6 +7,7 @@
 
 {% block content %}
 <div class="container mt-3">
+
     {% for item in object_list %}
     <div class="alert alert-success" role="alert">
         <p>タイトル：<a href="{% url 'detail' item.pk %}">{{item.title}}</a></p>

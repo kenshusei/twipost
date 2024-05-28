@@ -40,7 +40,7 @@ class CreatePost(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'create.html'
     fields = ['title', 'content']
-    success_url = reverse_lazy('mypost')
+    success_url = reverse_lazy('post:mypost')
 
     def form_valid(self, form):
         """投稿ユーザーをリクエストユーザーと紐付け"""
@@ -69,7 +69,7 @@ class UpdatePost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self,  **kwargs):
         """編集完了後の遷移先"""
         pk = self.kwargs["pk"]
-        return reverse_lazy('detail', kwargs={"pk": pk})
+        return reverse_lazy('post:detail', kwargs={"pk": pk})
     
     def test_func(self, **kwargs):
         """アクセスできるユーザーを制限"""
@@ -82,7 +82,7 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """投稿編集ページ"""
     model = Post
     template_name = 'delete.html'
-    success_url = reverse_lazy('mypost')
+    success_url = reverse_lazy('post:mypost')
 
     def test_func(self, **kwargs):
         """アクセスできるユーザーを制限"""
@@ -110,7 +110,7 @@ class LikeHome(LikeBase):
     """HOMEページでいいねした場合"""
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        return redirect('home')
+        return redirect('post:home')
 
 
 class LikeDetail(LikeBase):
@@ -118,7 +118,7 @@ class LikeDetail(LikeBase):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         pk = self.kwargs['pk'] 
-        return redirect('detail', pk)
+        return redirect('post:detail', pk)
 ###############################################################
 
 
@@ -142,14 +142,14 @@ class FollowHome(FollowBase):
     """HOMEページでフォローした場合"""
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        return redirect('home')
+        return redirect('post:home')
 
 class FollowDetail(FollowBase):
     """詳細ページでフォローした場合"""
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         pk = self.kwargs['pk'] 
-        return redirect('detail', pk)
+        return redirect('post:detail', pk)
 ###############################################################
 
 

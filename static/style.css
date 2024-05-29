@@ -6,3 +6,17 @@
 .add-color{
     color:palevioletred;
 }
+
+a{
+    color: inherit;
+    text-decoration: none;
+}
+
+.row-display{
+    width: 100%
+}
+
+.space {
+    white-space: nowrap;
+    overflow: hidden;
+  }

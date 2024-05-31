@@ -166,5 +166,5 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 SITE_ID = 1 
 
-LOGIN_REDIRECT_URL = 'post:home'          
+LOGIN_REDIRECT_URL = 'post:index'          
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'

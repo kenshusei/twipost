@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views import generic
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -9,6 +10,9 @@ from .models import Post, Connection
 
 from django.template import RequestContext
 
+
+class IndexView(generic.TemplateView):
+    template_name = "index.html"
 
 class Home(LoginRequiredMixin, ListView):
     """HOMEページで、自分以外のユーザー投稿をリスト表示"""

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import Home, MyPost, CreatePost, DetailPost, UpdatePost, DeletePost,\
+from .views import IndexView, Home, MyPost, CreatePost, DetailPost, UpdatePost, DeletePost,\
                    LikeHome, FollowHome, FollowDetail, FollowList, LikeDetail
 
 
@@ -8,7 +8,8 @@ from .views import Home, MyPost, CreatePost, DetailPost, UpdatePost, DeletePost,
 
 app_name = 'post'
 urlpatterns = [
-    path('', Home.as_view(), name='home'),
+    path('', IndexView.as_view(), name="index"),
+    path('home/', Home.as_view(), name='home'),
     path('mypost/', MyPost.as_view(), name='mypost'),
     path('create/', CreatePost.as_view(), name='create'),
     path('detail/<int:pk>', DetailPost.as_view(), name='detail'),
